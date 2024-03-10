@@ -38,7 +38,7 @@
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
                         </div>
-                        <button type="button" class="btn btn-primary" @click="loginUser()">Register</button>
+                        <button type="button" class="btn btn-primary" @click="loginUser()">Login</button>
                     </form>
                 </div>
                 <div class="col-3">
@@ -84,6 +84,7 @@ export default {
                         const access_token = response.data.access_token;
                         const refresh_token = response.data.refresh_token;
                         const u_mail = response.data.u_mail;
+                        const userRole = response.data.role;
 
                         console.log(u_mail)
                         console.log(access_token)
@@ -91,6 +92,7 @@ export default {
                         localStorage.setItem("access_token", access_token);
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("user_mail", u_mail);
+                        localStorage.setItem("userRole", userRole);
                         
                         this.$router.push("/home");
                         return;

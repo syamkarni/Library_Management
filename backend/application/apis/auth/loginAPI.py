@@ -5,7 +5,7 @@ from flask_security.utils import verify_password, hash_password
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity 
 
 
-from application.data.model import db, User
+from application.data.model import db, User, UserRole, Role
 
 
 user_post_args = reqparse.RequestParser()
@@ -27,12 +27,15 @@ class LoginAPI(Resource):
         if verify_password(password,user.password):
             return jsonify({'status': 'failed', 'message':'wrong Password'})
         
+        user_role = UserRole.query.filter_by(user_id=user.user_id).first()
+        role_name = user_role.role.name if user_role else 'No Role Assigned'
+        
         refresh_token = create_refresh_token(identity= user.user_id)
         access_token = create_access_token(identity=user.user_id)
 
         login_user(user)
 
-        return jsonify({'status': 'success', 'message':'Successfully Logged in!!', 'access_token': access_token, 'refresh_token': refresh_token, u_mail : user.u_mail})
+        return jsonify({'status': 'success', 'message':'Successfully Logged in!!', 'access_token': access_token, 'refresh_token': refresh_token, 'u_mail' : user.u_mail, 'role': role_name })
     
 
 class RefreshTokenAPI(Resource):

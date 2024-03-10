@@ -11,7 +11,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Login</a>
+                            <router-link to ='/login'><a class="nav-link active" aria-current="page" href="#">Login</a></router-link>
                         </li>
 
 
@@ -28,6 +28,13 @@
                 <div class="col-6">
                     <h2>Registration Form</h2>
                     <form @submit.prevent>
+                        <div class="mb-3">
+                            <label for="roleSelect" class="form-label">Role</label>
+                            <select class="form-select" id="roleSelect" v-model="role" required>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -64,6 +71,7 @@ export default {
             u_mail: "",
             password: "",
             re_password: "",
+            role: "user",
         }
     },
     methods: {
@@ -87,6 +95,7 @@ export default {
             axios.post('http://127.0.0.1:8081/api/register', {
                 u_mail: this.u_mail,
                 password: this.password,
+                role: this.role
             })
                 .then((response) => {
                     if (response.data.status === "success") {

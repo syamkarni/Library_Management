@@ -29,11 +29,10 @@
           </div>
       </div>
   </nav>
-  <div class="Navbar_padding">
-
-      <UserHome v-if="userRole == 'user'" />
-      <AdminHome v-if="userRole == 'admin'" />
-      <LibrarianHome v-if="userRole == 'librarian'" />
+      <div class="Navbar_padding">
+        <UserHome v-if="userRole == 'user'" />
+        <AdminHome v-if="userRole == 'admin'" />
+        <LibrarianHome v-if="userRole == 'librarian'" />
       </div>
     </div>
   </template>

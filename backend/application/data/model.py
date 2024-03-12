@@ -17,6 +17,8 @@ class User(db.Model, UserMixin):
     fs_uniquifier = db.Column(db.String(300), unique=True, nullable=False)
     roles = db.relationship('UserRole', back_populates='user')
     active = db.Column(db.Boolean)
+    borrowed_books = db.relationship('Book', foreign_keys='Book.borrower_id')
+    assigned_books = db.relationship('Book', foreign_keys='Book.librarian_id')
 
     def __init__(self, u_mail, password, fs_uniquifier):
         self.u_mail = u_mail
@@ -42,3 +44,21 @@ class Book(db.Model):
     book_author = db.Column(db.String(50))
     pages_in_book = db.Column(db.Integer)
     price = db.Column(db.Integer)
+    date_issued = db.Column(db.DateTime)
+    date_returned = db.Column(db.DateTime)
+    content = db.Column(db.Text)
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+    section = db.relationship('Section', back_populates='books')
+    borrower_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    librarian_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    borrower = db.relationship('User', foreign_keys=[borrower_id])
+    librarian = db.relationship('User', foreign_keys=[librarian_id])
+    
+
+class Section(db.Model):
+    __tablename__ = 'section'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), nullable=False)
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
+    description = db.Column(db.String(250))
+    books = db.relationship('Book', back_populates='section')

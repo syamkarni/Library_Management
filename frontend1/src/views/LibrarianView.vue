@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>Librarian Dashboard</h1>
-      <!-- Admin-specific content here -->
+      
     </div>
   </template>
   

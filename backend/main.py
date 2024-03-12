@@ -2,6 +2,7 @@
 import os
 import secrets
 from flask import Flask, current_app
+from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -26,6 +27,7 @@ from application.apis.auth.registerAPI import RegisterAPI
 app = Flask(__name__, template_folder= "./templates")
 app.config.from_object(config)
 app.app_context().push()
+migrate = Migrate(app, db)
 
 
 #  Flask CORS

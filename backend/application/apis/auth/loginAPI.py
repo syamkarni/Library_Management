@@ -27,6 +27,7 @@ class LoginAPI(Resource):
         if verify_password(password,user.password):
             return jsonify({'status': 'failed', 'message':'wrong Password'})
         
+        
         user_role = UserRole.query.filter_by(user_id=user.user_id).first()
         role_name = user_role.role.name if user_role else 'No Role Assigned'
         

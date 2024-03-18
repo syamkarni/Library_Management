@@ -17,8 +17,9 @@ class User(db.Model, UserMixin):
     fs_uniquifier = db.Column(db.String(300), unique=True, nullable=False)
     roles = db.relationship('UserRole', back_populates='user')
     active = db.Column(db.Boolean)
-    borrowed_books = db.relationship('Book', foreign_keys='Book.borrower_id')
-    assigned_books = db.relationship('Book', foreign_keys='Book.librarian_id')
+    borrowed_books = db.relationship('Book', back_populates='borrower', overlaps="borrower")
+    assigned_books = db.relationship('Book', back_populates='librarian', overlaps="librarian")
+
 
     def __init__(self, u_mail, password, fs_uniquifier):
         self.u_mail = u_mail
@@ -50,9 +51,9 @@ class Book(db.Model):
     section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     section = db.relationship('Section', back_populates='books')
     borrower_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    borrower = db.relationship('User', back_populates='borrowed_books', overlaps="borrowed_books")
     librarian_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-    borrower = db.relationship('User', foreign_keys=[borrower_id])
-    librarian = db.relationship('User', foreign_keys=[librarian_id])
+    librarian = db.relationship('User', back_populates='assigned_books', overlaps="assigned_books")
     
 
 class Section(db.Model):

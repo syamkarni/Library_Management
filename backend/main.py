@@ -21,6 +21,8 @@ from application.apis.book.bookApi import BookAPI
 from application.apis.auth.loginAPI import LoginAPI
 from application.apis.auth.loginAPI import RefreshTokenAPI
 from application.apis.auth.registerAPI import RegisterAPI
+from application.apis.section.sectionapi import AllSectionAPI
+from application.apis.section.sectionapi import SectionAPI   
 
 
 
@@ -63,6 +65,9 @@ security.init_app(app, user_datastore)
 
 api.add_resource(AllBookAPI, "/api/book")
 api.add_resource(BookAPI, "/api/book/<int:book_id>")
+
+api.add_resource(AllSectionAPI, '/api/sections')
+api.add_resource(SectionAPI, '/api/sections/<int:section_id>')
 
 api.add_resource(RegisterAPI, "/api/register")
 api.add_resource(LoginAPI,'/api/login')

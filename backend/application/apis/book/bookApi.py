@@ -10,6 +10,12 @@ book_post_args.add_argument('book_name', type=str)
 book_post_args.add_argument('book_author', type=str)
 book_post_args.add_argument('pages_in_book', type=int)
 book_post_args.add_argument('price', type=int)
+book_post_args.add_argument('date_issued', type=str)  # Consider using a proper datetime format
+book_post_args.add_argument('date_returned', type=str)
+book_post_args.add_argument('content', type=str)
+book_post_args.add_argument('section_id', type=int)
+book_post_args.add_argument('borrower_id', type=int)
+book_post_args.add_argument('librarian_id', type=int)
 
 
 book_put_args = reqparse.RequestParser()
@@ -17,14 +23,27 @@ book_put_args.add_argument('book_name', type=str)
 book_put_args.add_argument('book_author', type=str)
 book_put_args.add_argument('pages_in_book', type=int)
 book_put_args.add_argument('price', type=int)
+book_put_args.add_argument('date_issued', type=str)
+book_put_args.add_argument('date_returned', type=str)
+book_put_args.add_argument('content', type=str)
+book_put_args.add_argument('section_id', type=int)
+book_put_args.add_argument('borrower_id', type=int)
+book_put_args.add_argument('librarian_id', type=int)
+
 
 
 resource_fields = {
     'book_id': fields.Integer,
-    'book_name' : fields.String,
+    'book_name': fields.String,
     'book_author': fields.String,
     'pages_in_book': fields.Integer,
     'price': fields.Integer,
+    'date_issued': fields.String,
+    'date_returned': fields.String,
+    'content': fields.String,
+    'section_id': fields.Integer,
+    'borrower_id': fields.Integer,
+    'librarian_id': fields.Integer,
 }
 
 class AllBookAPI(Resource):

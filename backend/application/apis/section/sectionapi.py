@@ -22,22 +22,24 @@ section_fields = {
 
 # Resource classes
 class AllSectionAPI(Resource):
-    @marshal_with(section_fields)
     def get(self):
         sections = Section.query.all()
-        return sections
+        section_list = []
+        for section in sections:
+            section_data = marshal(section, section_fields)
+            section_list.append(section_data)
+        return section_list
 
-    @marshal_with(section_fields)
     def post(self):
         args = section_post_args.parse_args()
         section = Section(name=args['name'], description=args['description'])
         try:
             db.session.add(section)
             db.session.commit()
-            return marshal(section, section_fields), 201  # Make sure 'marshal' is imported
+            return marshal(section, section_fields), 201
         except Exception as e:
             current_app.logger.error(f"Error adding section: {e}", exc_info=True)
-            return {'error': str(e)}, 500
+            return jsonify({'error': str(e)}), 500
         
     
 

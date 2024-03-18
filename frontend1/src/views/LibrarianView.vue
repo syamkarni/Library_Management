@@ -10,7 +10,7 @@
           </div>
           <p>{{ section.description }}</p>
           <div class="d-flex justify-content-center">
-            <button class="btn btn-dark">+</button>
+            <button class="btn btn-dark" @click="navigateToAddBook(section.id)">+</button>
           </div>
         </div>
       </div>
@@ -32,6 +32,9 @@ export default {
     this.fetchSections();
   },
   methods: {
+    navigateToAddBook(sectionId) {
+    this.$router.push({ name: 'AddBook', params: { sectionId: sectionId }});
+  },
     fetchSections() {
       // Replace the URL with your actual API endpoint
       axios.get('http://127.0.0.1:8081/api/sections')

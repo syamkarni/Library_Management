@@ -5,6 +5,7 @@ import RegisterView from "../views/auth/RegisterView.vue"
 import LoginView from "../views/auth/LoginView"
 import CommonHomeView from "../views/home/CommonHomeView.vue"
 import AddSection from "../views/addons/AddSection.vue"
+import AddBook from "../views/addons/AddBook.vue"
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const routes = [
         path: "/addsection",
         name: "Add-Section",
         component: AddSection,
+    },{
+        path: '/addbook/:sectionId',
+        name: "AddBook",
+        component: AddBook,
     }
 ];
 

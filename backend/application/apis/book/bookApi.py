@@ -60,7 +60,7 @@ class AllBookAPI(Resource):
         book = Book.query.filter_by(book_name = args["book_name"]).first()
         if book:
             abort(409, message = "book already exists")
-        input = Book(book_name = args["book_name"], book_author = args["book_author"], pages_in_book = args["pages_in_book"], price = args["price"])
+        input = Book(book_name = args["book_name"], book_author = args["book_author"], pages_in_book = args["pages_in_book"], price = args["price"], content = args["content"], section_id = args["section_id"])
         db.session.add(input)
         db.session.commit()
         return jsonify({"message" : "Book is added in database"})

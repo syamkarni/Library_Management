@@ -34,6 +34,9 @@
         <AdminHome v-if="userRole == 'admin'" />
         <LibrarianHome v-if="userRole == 'librarian'" />
       </div>
+      <div class="bottom-bar">
+        <p>Footer content here</p>
+    </div>
     </div>
   </template>
   
@@ -80,5 +83,15 @@
   .Navbar_padding {
     padding-top: 56px; /* Adjust according to your navbar's height */
   }
+  .bottom-bar {
+            
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #343a40; /* Assuming this is your navbar color */
+            color: white;
+            text-align: center;
+            padding: 0.25px 0;
+        }
   </style>
   

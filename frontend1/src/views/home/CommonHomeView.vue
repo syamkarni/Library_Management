@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main-body">
       <head>
         <title>Bootstrap Navbar</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -72,6 +72,11 @@
   
   <style scoped>
   /* Your styles here */
+  .main-body {
+  background-color: #121212; /* Dark background */
+  color: #ffffff; /* Light text */
+  padding-top: 20px;
+        }
   .Navbar_padding {
     padding-top: 56px; /* Adjust according to your navbar's height */
   }

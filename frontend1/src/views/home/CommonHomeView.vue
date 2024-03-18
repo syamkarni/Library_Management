@@ -35,7 +35,7 @@
         <LibrarianHome v-if="userRole == 'librarian'" />
       </div>
       <div class="bottom-bar">
-        <p>Footer content here</p>
+        <p>All rights reserved*</p>
     </div>
     </div>
   </template>

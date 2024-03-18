@@ -1,25 +1,22 @@
 <template>
   <div>
-      <router-link to ='/addsection'><button class="fixed-plus-button" >Add Section</button></router-link>
-    <h1>Librarian Dashboard</h1>
-    <div class="container">
-      <div class="main-container" v-for="(section, index) in sections" :key="index">
-        <h2>{{ section.name }}</h2>
-        <div class="row">
-          <!-- Dynamic Containers for Each Section -->
-          <div class="col-md-4 custom-container" v-for="(content, cIndex) in section.contents" :key="cIndex">
-            <h5>{{ content.title }}</h5>
-            <p>{{ content.description }}</p>
+      <router-link to='/addsection'><button class="fixed-plus-button">Add Section</button></router-link>
+      <h1>Librarian Dashboard</h1>
+      <div class="container">
+        <div class="main-container" v-for="(section, index) in sections" :key="index">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>{{ section.name }}</h2>
+            <p>{{ formatDate(section.date_created) }}</p>
+          </div>
+          <p>{{ section.description }}</p>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-dark">+</button>
           </div>
         </div>
-        <!-- Plus Button -->
-        <div class="d-flex justify-content-center">
-          <button class="btn btn-dark">+</button>
-        </div>
       </div>
-    </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -39,11 +36,14 @@ export default {
       // Replace the URL with your actual API endpoint
       axios.get('http://127.0.0.1:8081/api/sections')
         .then(response => {
-          this.sections = response.data; // Assuming the response data is the array of sections
+          this.sections = response.data;
         })
         .catch(error => {
           console.error('Error fetching sections:', error);
         });
+    },
+    formatDate(dateString) {
+      return dateString.split(' ')[0];
     }
   }
 };

@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse, fields, marshal_with
+from flask_restful import Resource, reqparse, fields, marshal_with, marshal
 from application.data.model import db, Section
 from flask import jsonify, current_app
 
@@ -6,7 +6,6 @@ from flask import jsonify, current_app
 section_post_args = reqparse.RequestParser()
 section_post_args.add_argument('name', type=str, required=True, help="Name required")
 section_post_args.add_argument('description', type=str)
-section_post_args.add_argument('date_created', type=str, required=True, help="Creation date required")
 
 section_put_args = reqparse.RequestParser()
 section_put_args.add_argument('name', type=str)
@@ -30,16 +29,15 @@ class AllSectionAPI(Resource):
 
     @marshal_with(section_fields)
     def post(self):
+        args = section_post_args.parse_args()
+        section = Section(name=args['name'], description=args['description'])
         try:
-            args = section_post_args.parse_args()
-            section = Section(name=args['name'], description=args['description'], date_created=args['date_created'])
             db.session.add(section)
             db.session.commit()
-            return section, 201
+            return marshal(section, section_fields), 201  # Make sure 'marshal' is imported
         except Exception as e:
-            # Log the exception
-            current_app.logger.error(f"Error adding section: {e}")
-            return jsonify(error=str(e)), 500
+            current_app.logger.error(f"Error adding section: {e}", exc_info=True)
+            return {'error': str(e)}, 500
         
     
 

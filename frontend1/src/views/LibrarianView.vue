@@ -16,7 +16,8 @@
               <div class="custom-container">
                 <h5>{{ book.book_name }}</h5>
                 <p> hello {{ book.book_author }}</p>
-                <p>Pages: {{ book.pages_in_book }}</p>
+                <p>Pages: {{ book.pages }}</p>
+                <p>Content: {{ book.content }}</p>
                 <button class="btn btn-dark" @click="editBook(book.id)">Edit</button>
               </div>
             </div>

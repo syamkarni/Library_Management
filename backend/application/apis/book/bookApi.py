@@ -51,7 +51,7 @@ class AllBookAPI(Resource):
         books = Book.query.all()
         book_list = []
         for book in books:
-            book_list.append({'book_id': book.book_id, 'book_name': book.book_name, 'book_author': book.book_author })
+            book_list.append({'book_id': book.book_id, 'book_name': book.book_name, 'book_author': book.book_author, 'section_id' : book.section_id, 'pages': book.pages_in_book })
         return book_list
 
 

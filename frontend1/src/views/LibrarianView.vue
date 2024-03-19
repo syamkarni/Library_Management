@@ -9,6 +9,18 @@
             <p>{{ formatDate(section.date_created) }}</p>
           </div>
           <p>{{ section.description }}</p>
+          <div class="row">
+            <div class="col-md-4"
+           v-for="book in booksForSection(section.id)"
+           :key="book.book_id">
+              <div class="custom-container">
+                <h5>{{ book.book_name }}</h5>
+                <p> hello {{ book.book_author }}</p>
+                <p>Pages: {{ book.pages_in_book }}</p>
+                <button class="btn btn-dark" @click="editBook(book.id)">Edit</button>
+              </div>
+            </div>
+          </div>
           <div class="d-flex justify-content-center">
             <button class="btn btn-dark" @click="navigateToAddBook(section.id)">+</button>
           </div>
@@ -25,15 +37,29 @@ export default {
   name: 'LibrarianView',
   data() {
     return {
-      sections: []
+      sections: [],
+      books: [],
     };
   },
   created() {
     this.fetchSections();
+    this.fetchAllBooks();
   },
   methods: {
     navigateToAddBook(sectionId) {
     this.$router.push({ name: 'AddBook', params: { sectionId: sectionId }});
+  },
+  fetchAllBooks() {
+    axios.get('http://127.0.0.1:8081/api/book') // Make sure the URL is correct
+      .then(response => {
+        this.books = response.data;
+      })
+      .catch(error => {
+        console.error('Error fetching books:', error);
+      });
+  },
+  booksForSection(sectionId) {
+    return this.books.filter(book => book.section_id === sectionId);
   },
     fetchSections() {
       // Replace the URL with your actual API endpoint

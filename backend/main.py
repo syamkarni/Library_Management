@@ -1,7 +1,7 @@
 # Importing essential libraies--------------------------------
 import os
 import secrets
-from flask import Flask, current_app
+from flask import Flask, current_app, jsonify, request, abort
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_restful import Resource, Api
@@ -75,6 +75,19 @@ api.add_resource(LoginAPI,'/api/login')
 api.add_resource(RefreshTokenAPI,"/api/refresh_token")
 
 # def new_librarian():
+@app.route('/api/sections/<int:section_id>', methods=['PUT'])
+def update_section(section_id):
+    section = Section.query.get(section_id)
+    if not section:
+        abort(404, "Section not found")
+    
+    data = request.json
+    section.name = data.get('name', section.name)
+    section.description = data.get('description', section.description)
+    # Update other fields as necessary
+
+    db.session.commit()
+    return jsonify({"message": "Section updated successfully"})
 
 
 with app.app_context():
